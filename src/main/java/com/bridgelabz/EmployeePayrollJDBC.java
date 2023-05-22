@@ -1,8 +1,6 @@
 package com.bridgelabz;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class EmployeePayrollJDBC {
     public static void main(String[] args) throws SQLException {
@@ -12,11 +10,15 @@ public class EmployeePayrollJDBC {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_payroll", "root", "Swapnil123");
             System.out.println("Connection Done...");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM employee");
+            while (resultSet.next()) {
+                System.out.println(resultSet.getInt("id") + " " + resultSet.getString("name"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             connection.close();
         }
-
     }
 }
